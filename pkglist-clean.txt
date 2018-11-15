@@ -12,6 +12,7 @@ bluez-utils
 brightnessctl
 btrfs-progs
 bzip2
+clang
 coreutils
 cryptsetup
 cups
