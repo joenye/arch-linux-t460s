@@ -86,6 +86,7 @@ python-notify2
 python-pip
 python-pylint
 reiserfsprogs
+ripgrep
 rofi
 s-nail
 sed
