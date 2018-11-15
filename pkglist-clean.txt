@@ -2,7 +2,6 @@ acpi
 acpi_call
 alsa-plugins
 alsa-utils
-amd-ucode
 autoconf
 automake
 bash
