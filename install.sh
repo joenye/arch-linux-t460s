@@ -228,9 +228,6 @@ systemctl --user enable pulseaudio.service
 systemctl --user start pulseuadio.service
 pactl list sinks short
 
-# Configure TLP: set SATA_LINKPWR_ON_BAT=max_performance
-sudo vim /etc/default/tlp
-
 # Configure thinkfan
 sudo modprobe thinkpad_acpi
 sudo modprobe acpi_call
@@ -243,15 +240,24 @@ sudo systemctl enable lm_sensors
 # https://www.reddit.com/r/debian/comments/77d2br/thinkfan_fails_to_load_at_boot_but_works_fine/
 sudo vim /usr/lib/systemd/system/thinkfan.service
 
-# Configure vim: enter (neo)vim and run :PlugInstall
+# Setup vim: run (neo)vim and :PlugInstall and :checkhealth
 
 # Configure bluetooth
 sudo usermod -a -G lp joenye
 # ControllerMode=bredr
-# AutoEnable=true
 sudo vim /etc/bluetooth/main.conf
 sudo systemctl enable bluetooth.service
 sudo systemctl start bluetooth.service
+
+# Configure TLP
+sudo systemctl enable tlp.service
+sudo systemctl enable tlp-sleep.service
+sudo systemctl start tlp.service
+sudo systemctl start tlp-sleep.service
+sudo systemctl mask systemd-rfkill.service
+# SATA_LINKPWR_ON_BAT=max_performance
+# DEVICES_TO_DISABLE_ON_STARTUP="bluetooth"
+sudo vim /etc/default/tlp
 
 # Optional: configure CUPS for Brother HL-L2365DW printer
 yay brother-cups-wrapper-laser
