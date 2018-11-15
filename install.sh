@@ -141,7 +141,6 @@ reboot
 # Networking
 # -----------------------------------
 
-# Uses systemd-networkd
 sudo systemctl enable systemd-networkd
 sudo systemctl start systemd-networkd
 sudo systemctl enable systemd-resolved
@@ -175,24 +174,22 @@ sudo systemctl start wpa_supplicant@wlp4s0
 
 # Add new connection
 sudo wpa_cli -i wlp4s0
-scan
-scan_results
-add_network
-set_network 0 ssid "<ssid>"
-set_network 0 psk "<psk>"  (if no psk, must do set_network 0 key_mgmt NONE)
-enable_network 0
-save_config
-exit
-# Or add manually to /etc/wpa_supplicant/wpa_supplicant-wlp4s0.conf
-# Or use wpa_gui
+> scan
+> scan_results
+> add_network
+> set_network 0 ssid "<ssid>"
+> set_network 0 psk "<psk>"  # or if no psk, must do set_network 0 key_mgmt NONE
+> enable_network 0
+> save_config
+# Or add manually add to /etc/wpa_supplicant/wpa_supplicant-wlp4s0.conf
 
 # -----------------------------------
 # Packages
 # -----------------------------------
 
-# Configure git
-# Create new SSH key for device: https://help.github.com/articles/connecting-to-github-with-ssh/
-# Add GPG key from backup: https://gist.github.com/chrisroos/1205934
+# Optional SSH/GPG setup:
+# 1. Create new SSH key: https://help.github.com/articles/connecting-to-github-with-ssh/
+# 2. Import GPG key from backup: https://gist.github.com/chrisroos/1205934 (methods 2-3)
 
 # Select all
 sudo pacman -S base-devel
@@ -203,13 +200,13 @@ cd yay
 makepkg -si
 
 # Disable package compression
-sudo vim /etc/maklepkg.conf
+sudo vim /etc/makepkg.conf
 # [...]
 # #PKGEXT='.pkg.tar.xz'
 # PKGEXT='.pkg.tar'
 # [...]
 
-# Install sway
+# We now have a desktop!
 yay termite sway
 
 # Install all other packages
@@ -223,7 +220,7 @@ git clone git@github.com:joenye/Dotfiles.git
 git clone git@github.com:joenye/_Dotfiles.git
 .~/_Dotfiles/install.sh
 
-# Configure brightnessctl
+# Temporary fix for brightnessctl: https://aur.archlinux.org/packages/brightnessctl/
 sudo chmod u+s /usr/bin/brightnessctl
 
 # Configure volume
@@ -231,8 +228,7 @@ systemctl --user enable pulseaudio.service
 systemctl --user start pulseuadio.service
 pactl list sinks short
 
-# Configure TLP
-# Set SATA_LINKPWR_ON_BAT=max_performance
+# Configure TLP: set SATA_LINKPWR_ON_BAT=max_performance
 sudo vim /etc/default/tlp
 
 # Configure thinkfan
@@ -273,13 +269,14 @@ sudo systemctl enable org.cups.cupsd.service
 # We use IP address rather than hostname:
 # https://wiki.archlinux.org/index.php/CUPS/Printer-specific_problems#Network_printers
 # 1. Ensure printer is 192.168.0.12 and static DHCP address. Also printer is very
-# unreliable is 5Ghz connection is on the router simultaneously with a 2.4Ghz connection
+# unreliable if 5Ghz connection is on the router simultaneously with a 2.4Ghz connection
 # 2. Add printer: http://localhost:631/ -> Add Printer
 # 3. Other Network Printers -> Internet Printing Protocol (ipp)
 # 4. Connection ipp://192.168.0.12/ipp/port1
 # 5. Select Brother-HLL2360D Series PPD
 # 6. Set default options (e.g. DuplexTumble) and set as server default
-# For printing out code with syntax highlighting:
+
+# Optional: for printing out code with syntax highlighting:
 yay enscript
 # enscript -2rB --line-numbers --font=Courier8 -p out.ps --highlight=python -c <file.py>
 # lpr output.ps
@@ -324,10 +321,10 @@ sudo rm -r /home/.snapshots
 sudo mount -a
 sudo chmod 750 /home/.snapshots
 
-# Update /etc/snapper/configs/{root,home}:
 # TIMELINE_MIN_AGE="1800"
 # TIMELINE_LIMIT_HOURLY="5"
 # TIMELINE_LIMIT_DAILY="7"
 # TIMELINE_LIMIT_WEEKLY="0"
 # TIMELINE_LIMIT_MONTHLY="0"
 # TIMELINE_LIMIT_YEARLY="0"
+sudo vim /etc/snapper/configs/{root,home}
