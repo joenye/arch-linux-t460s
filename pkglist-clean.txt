@@ -118,6 +118,7 @@ vim-plug
 which
 wl-clipboard-git
 wpa_supplicant
+wireless_tools
 xf86-input-synaptics
 xfsprogs
 yay
