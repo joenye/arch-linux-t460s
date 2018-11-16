@@ -304,6 +304,11 @@ sudo systemctl enable disable-lid.service
 # systemd-boot pacman hook
 yay systemd-boot-pacman-hook
 
+# Raise fd limit (e.g. prevents deoplete-jedi errors)
+# Add DefaultLimitNOFILE=8192 under [Manager]
+sudo vim /etc/systemd/system.conf
+sudo vim /etc/systemd/user.conf
+
 # -----------------------------------
 # Snapshots
 # -----------------------------------
