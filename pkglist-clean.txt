@@ -28,6 +28,7 @@ fakeroot
 file
 filesystem
 findutils
+flake8
 flex
 fzf
 gawk
