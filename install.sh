@@ -151,6 +151,8 @@ Name=enp0s31f6
 
 [Network]
 DHCP=yes
+DNS=8.8.8.8
+DNS=8.8.4.4
 
 [DHCP]
 RouteMetric=10
@@ -161,6 +163,8 @@ Name=wlp4s0
 
 [Network]
 DHCP=yes
+DNS=8.8.8.8
+DNS=8.8.4.4
 
 [DHCP]
 RouteMetric=20
